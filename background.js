@@ -63,7 +63,6 @@ function saveAnalyticsToStorage() {
 }
 
 // פונקציה לעדכון סטטיסטיקות יומיות
-
 function updateDailyStats(successful, failed, duration) {
   const today = new Date().toISOString().split('T')[0];
   
@@ -84,6 +83,18 @@ function updateDailyStats(successful, failed, duration) {
   todayStats.successRate = Math.round((todayStats.successful / todayStats.total) * 100) || 0;
 
   analytics.totalCoins += successful; // מוסיף להצלחות הכלליות
+  
+  // מוודא שהנתונים היומיים נמצאים במערך
+  const existingIndex = analytics.dailyStats.findIndex(day => day.date === today);
+  if (existingIndex >= 0) {
+    analytics.dailyStats[existingIndex] = todayStats;
+  } else {
+    analytics.dailyStats.push(todayStats);
+  }
+  
+  analytics.lastRunDate = today;
+  updateStreak(today, successful > 0);
+  saveAnalyticsToStorage();
 }
 
 // פונקציה לעדכון רצף ימים
@@ -283,11 +294,9 @@ async function processAllLinks() {
       
       // בדיקת תוצאה
       if (result && result[0] && result[0].result) {
-        // הצלחה
         dailyStats.successful++;
         log(`לינק ${i + 1} הושלם בהצלחה ✅`);
       } else {
-        // לא נמצא כפתור או שגיאה
         dailyStats.failed++;
         log(`לינק ${i + 1} - לא נמצא כפתור ❌`);
       }
@@ -297,7 +306,7 @@ async function processAllLinks() {
         chrome.tabs.remove(tab.id, () => resolve());
       });
       
-      await sleep(2000); // מנוחה בין לינקים
+      await sleep(5000); // מנוחה בין לינקים
     } catch (error) {
       // טיפול בשגיאות
       dailyStats.failed++;
@@ -315,7 +324,6 @@ async function processAllLinks() {
   }
 }
 
-
 // פונקציה להמתנה לטעינת טאב
 function waitForTabLoad(tabId) {
   return new Promise((resolve) => {
@@ -329,7 +337,7 @@ function waitForTabLoad(tabId) {
         if (tab.status === 'complete') {
           resolve();
         } else {
-          setTimeout(checkStatus, 500);
+          setTimeout(checkStatus, 2000);
         }
       });
     };
@@ -346,38 +354,107 @@ function sleep(ms) {
 // פונקציה שתרוץ בדף (content script)
 function performPageActions() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log('מחפש כפתור כניסה');
-      
-      const buttons = document.querySelectorAll('div.ci-button, button, [role="button"]');
-      let targetButton = null;
-      
-      // לוגיקה משופרת לזיהוי כפתורים
-      for (const button of buttons) {
-        const text = button.textContent.trim().toLowerCase();
-        if (
-          text.includes('כניסה') || 
-          text.includes('enter') || 
-          text.includes('sign in') ||
-          button.getAttribute('data-spm')?.includes('sign')
-        ) {
-          targetButton = button;
-          break;
-        }
-      }
-      
-      if (targetButton) {
-        console.log('נמצא כפתור, לוחץ עליו');
-        targetButton.click();
-        resolve(true); // החזרת הצלחה אמיתית
-      } else {
-        console.log('לא נמצא כפתור מתאים');
-        resolve(false); // החזרת כישלון
-      }
-    }, 5000);
+      setTimeout(() => {
+          console.log('מחפש כפתור כניסה/איסוף');
+          
+          // חיפוש מורחב של כפתורים
+          const allButtons = document.querySelectorAll(`
+              div.ci-button, 
+              button, 
+              [role="button"], 
+              div[class*="button"], 
+              div[class*="collect"],
+              div[class*="checkin"],
+              div[class*="coin"],
+              a[class*="button"]
+          `);
+          
+          let targetButton = null;
+          
+          // לוגיקה משופרת לזיהוי כפתורים
+          for (const button of allButtons) {
+              const text = button.textContent.trim().toLowerCase();
+              const ariaLabel = button.getAttribute('aria-label') || '';
+              const title = button.getAttribute('title') || '';
+              const allText = (text + ' ' + ariaLabel + ' ' + title).toLowerCase();
+              
+              if (
+                  text.includes('כניסה') ||
+                  text.includes('איסוף') ||
+                  text.includes('collect') ||
+                  text.includes('check') ||
+                  text.includes('enter') ||
+                  text.includes('sign in') ||
+                  allText.includes('coin') ||
+                  button.getAttribute('data-spm')?.includes('sign') ||
+                  button.getAttribute('data-spm')?.includes('coin')
+              ) {
+                  targetButton = button;
+                  console.log(`נמצא כפתור מתאים: "${text}"`);
+                  break;
+              }
+          }
+          
+          if (targetButton) {
+              console.log('מנסה ללחוץ על הכפתור בכמה דרכים...');
+              
+              // שיטה 1: Click רגיל
+              targetButton.click();
+              
+              // שיטה 2: Mouse Events מדומים
+              const events = ['mousedown', 'mouseup', 'click'];
+              events.forEach(eventType => {
+                  const event = new MouseEvent(eventType, {
+                      view: window,
+                      bubbles: true,
+                      cancelable: true,
+                      buttons: 1
+                  });
+                  targetButton.dispatchEvent(event);
+              });
+              
+              // שיטה 3: Touch Events למובייל
+              const touchEvent = new TouchEvent('touchstart', {
+                  bubbles: true,
+                  cancelable: true,
+                  touches: [new Touch({
+                      identifier: 0,
+                      target: targetButton,
+                      clientX: 0,
+                      clientY: 0
+                  })]
+              });
+              targetButton.dispatchEvent(touchEvent);
+              
+              // שיטה 4: Focus + Enter key
+              if (targetButton.focus) {
+                  targetButton.focus();
+                  const enterEvent = new KeyboardEvent('keydown', {
+                      key: 'Enter',
+                      keyCode: 13,
+                      bubbles: true
+                  });
+                  targetButton.dispatchEvent(enterEvent);
+              }
+              
+              console.log('כל השיטות בוצעו - בודק תוצאה...');
+              
+              // המתנה קצרה לבדיקת תוצאה
+              setTimeout(() => {
+                  resolve(true);
+              }, 1000);
+              
+          } else {
+              console.log('לא נמצא כפתור מתאים');
+              console.log('כפתורים זמינים:');
+              allButtons.forEach((btn, index) => {
+                  console.log(`${index}: "${btn.textContent.trim()}"`);
+              });
+              resolve(false);
+          }
+      }, 10000); // הגדלת זמן המתנה ל-10 שניות
   });
 }
-
 
 // מאזין להודעות מה-popup - מורחב עם פונקציות חדשות
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
