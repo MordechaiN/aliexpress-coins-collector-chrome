@@ -6,15 +6,25 @@
  */
 
 // רשימת הלינקים - עכשיו תיטען מ-storage
-let LINKS = [
-  "https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?outBizId=5a96e8a378fe418fbd20331ff74a1b97&identity=SHOP&shopNowRedirect=https%253A%252F%252Fwww.aliexpress.com%252Fstore%252F1051119&spm=a2g0n.store_m_home.checkin_with_prize_2002708235515.0&statusBarHeight=93&_currency=USD&_lang=en_MA&fromApp=true&_launchTID=f50d9910-fd81-4c7a-a5e4-88da9ebb1219&aff_fcid=1010fe80a381497ea5be63e6f27ae502-1723128525135-02380-_DkopTOr&tt=CPS_NORMAL&aff_fsk=_DkopTOr&nr=n&_dognoseId=WlBpb1lNZEl5cWtEQUpDRnFRTHhkVlkBkTJ2rNJhbGlleHByZQAAA48y&aff_fcid=2c74dbb1986d4cf9a0506a067b901b78-1743156791321-08463-_DDxpLMf&tt=CPS_NORMAL&aff_fsk=_DDxpLMf&aff_platform=portals-tool&sk=_DDxpLMf&aff_trace_key=2c74dbb1986d4cf9a0506a067b901b78-1743156791321-08463-_DDxpLMf&terminal_id=bd170ef5df5a49228059a474d1c1c1ea",
-  "https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?outBizId=1fcb3e07f8f2471c95161497d80a91f7&identity=SHOP&shopNowRedirect=https%253A%252F%252Fwww.aliexpress.com%252Fstore%252F912370197&spm=a2g0n.store_m_home.checkin_with_prize_2008922585801.0&statusBarHeight=93&_currency=USD&_lang=en_MA&fromApp=true&_launchTID=0f86239d-ecea-4ef1-ab2c-c931809923b5&aff_fcid=5a7aebf80d1e4b47a86252f26eb55e31-1723139618559-08629-_DcJtNQP&tt=CPS_NORMAL&aff_fsk=_DcJtNQP&nr=n&_dognoseId=WlBpb1lNZEl5cWtEQUpDRnFRTHhkVlkBkTMf8rJhbGlleHByZQAAAXls&aff_fcid=36b877b12bff40ffa968b1c48a4d8d3c-1743156817542-08565-_DmmmKt5&tt=CPS_NORMAL&aff_fsk=_DmmmKt5&aff_platform=portals-tool&sk=_DmmmKt5&aff_trace_key=36b877b12bff40ffa968b1c48a4d8d3c-1743156817542-08565-_DmmmKt5&terminal_id=bd170ef5df5a49228059a474d1c1c1ea",
-  "https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?outBizId=1465f54c3802430a86efe9f859d1d641&identity=SHOP&shopNowRedirect=https%253A%252F%252Fwww.aliexpress.com%252Fstore%252F1927090&spm=a2g0n.store_m_home.checkin_with_prize_2003858993902.0&statusBarHeight=93&_currency=USD&_lang=en_MA&fromApp=true&_launchTID=174d326a-4cef-481c-8b5c-e591ce0bbc75&aff_fcid=d4a8a827f5b7458f9e5a482f518c47b3-1723139781080-02704-_DlfIOxz&tt=CPS_NORMAL&aff_fsk=_DlfIOxz&nr=n&_dognoseId=WlBpb1lNZEl5cWtEQUpDRnFRTHhkVlkBkTMibNdhbGlleHByZQAAA1Hg&aff_fcid=53a5adee1bff470694d31843c1ce514d-1743156824186-07543-_DmLqKZV&tt=CPS_NORMAL&aff_fsk=_DmLqKZV&aff_platform=portals-tool&sk=_DmLqKZV&aff_trace_key=53a5adee1bff470694d31843c1ce514d-1743156824186-07543-_DmLqKZV&terminal_id=bd170ef5df5a49228059a474d1c1c1ea",
-  "https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?_t=1728044340.120206&outBizId=0094d30d6bb64404a457758cb172d3a6&identity=SHOP&aff_fcid=8cb175eb36164cd6a8e57ec119fb04ba-1743617164483-08272-_om9LlmZ&tt=CPS_NORMAL&aff_fsk=_om9LlmZ&locale=en_US&dp=e8012ed7ffc93a78e7a3e45763140086&af=985336&cv=47843&afref=&mall_affr=pr3&utm_source=admitad&utm_medium=cpa&utm_campaign=985336&utm_content=47843&dp=e8012ed7ffc93a78e7a3e45763140086&af=985336&cv=47843&afref=&mall_affr=pr3&utm_source=admitad&utm_medium=cpa&utm_campaign=985336&utm_content=47843&aff_fcid=8e1508326062422993ed14eadf49ca10-1743617178915-05367-_ePNSNV&aff_fsk=_ePNSNV&aff_platform=portals-tool&sk=_ePNSNV&aff_trace_key=8e1508326062422993ed14eadf49ca10-1743617178915-05367-_ePNSNV&terminal_id=bd170ef5df5a49228059a474d1c1c1ea",
-  "https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?_t=1733067756.609393&outBizId=6446f9b385c249fb9baa289214f016e1&identity=SHOP&aff_fcid=1666b973aa7f4245ba8145bbc363fb10-1743617166913-08579-_oDedTln&tt=CPS_NORMAL&aff_fsk=_oDedTln&locale=en_US&dp=fcaaa7b3661eb7693313773740718378&af=985336&cv=47843&afref=&mall_affr=pr3&utm_source=admitad&utm_medium=cpa&utm_campaign=985336&utm_content=47843&dp=fcaaa7b3661eb7693313773740718378&af=985336&cv=47843&afref=&mall_affr=pr3&utm_source=admitad&utm_medium=cpa&utm_campaign=985336&utm_content=47843&aff_fcid=a0527ed4eec346b7a87ab39b02dfcf0d-1743617181533-00365-_ePNSNV&aff_fsk=_ePNSNV&aff_platform=portals-tool&sk=_ePNSNV&aff_trace_key=a0527ed4eec346b7a87ab39b02dfcf0d-1743617181533-00365-_ePNSNV&terminal_id=bd170ef5df5a49228059a474d1c1c1ea",
-  "https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?_t=1728044562.681774&outBizId=e5ba5b7349344a0987687e67ca3e54fe&identity=SHOP&aff_fcid=5eee0a5c179944d89f722dc3cb773b6b-1743617168311-05960-_olkfTLL&tt=CPS_NORMAL&aff_fsk=_olkfTLL&locale=en_US&dp=2f5857cf31d6454fcadf4fd751ff74ad&af=985336&cv=47843&afref=&mall_affr=pr3&utm_source=admitad&utm_medium=cpa&utm_campaign=985336&utm_content=47843&dp=2f5857cf31d6454fcadf4fd751ff74ad&af=985336&cv=47843&afref=&mall_affr=pr3&utm_source=admitad&utm_medium=cpa&utm_campaign=985336&utm_content=47843&aff_fcid=af2bc454987d4dbba61368216735a82c-1743617183730-06619-_ePNSNV&aff_fsk=_ePNSNV&aff_platform=portals-tool&sk=_ePNSNV&aff_trace_key=af2bc454987d4dbba61368216735a82c-1743617183730-06619-_ePNSNV&terminal_id=bd170ef5df5a49228059a474d1c1c1ea",
-  "https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?_t=1733067520.787595&outBizId=6b0870a9d7a943b1b08a4b275905c8e3&identity=SHOP&aff_fcid=6905cbbde8a14efd9bf766ad9f42f948-1743617170363-04091-_opIfj8N&tt=CPS_NORMAL&aff_fsk=_opIfj8N&locale=en_US&dp=13fad9fc7cceccad0d412bdd368d4f99&af=985336&cv=47843&afref=&mall_affr=pr3&utm_source=admitad&utm_medium=cpa&utm_campaign=985336&utm_content=47843&dp=13fad9fc7cceccad0d412bdd368d4f99&af=985336&cv=47843&afref=&mall_affr=pr3&utm_source=admitad&utm_medium=cpa&utm_campaign=985336&utm_content=47843&aff_fcid=2b547d82d0a243f1b68d1d7611b8041c-1743617288034-03907-_ePNSNV&aff_fsk=_ePNSNV&aff_platform=portals-tool&sk=_ePNSNV&aff_trace_key=2b547d82d0a243f1b68d1d7611b8041c-1743617288034-03907-_ePNSNV&terminal_id=bd170ef5df5a49228059a474d1c1c1ea"
+
+const SHOPS = [
+  "0094d30d6bb64404a457758cb172d3a6",
+  "0103f01098e1461bbf4cee788761e159",
+  "10c6c63f72cf43d0925970a990f7232d",
+  "1465f54c3802430a86efe9f859d1d641",
+  "1fcb3e07f8f2471c95161497d80a91f7",
+  "470df0c30a0848dcb5382104e3d26b95",
+  "5a96e8a378fe418fbd20331ff74a1b97",
+  "6446f9b385c249fb9baa289214f016e1",
+  "6b0870a9d7a943b1b08a4b275905c8e3",
+  "a73426260b7f4ebab4d8bc2e268d2e89",
+  "aa738abeccb3427aa9a704f845d0f1db",
+  "abb7e1dcd089459c9c34116414ed7b68",
+  "dacc7e77b34f4360ad2b3f93b03141bc",
+  "e5ba5b7349344a0987687e67ca3e54fe",
 ];
+
+let LINKS = SHOPS.map(id => `https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?outBizId=${id}&identity=SHOP`);
 
 let isLoggingEnabled = true;
 let currentProcessing = false;
