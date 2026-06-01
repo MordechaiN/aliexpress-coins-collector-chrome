@@ -29,6 +29,8 @@ let LINKS = [
   "https://a.aliexpress.com/_oDpDtNC"
   ];
 
+let LINKS = SHOPS.map(id => `https://sale.aliexpress.com/__mobile/wTTBw4hZBz_m.htm?outBizId=${id}&identity=SHOP`);
+
 let isLoggingEnabled = true;
 let currentProcessing = false;
 
