@@ -95,7 +95,7 @@ Includes a modern interface, dark mode, detailed analytics, and smart features.
 
 ## 🔏 License
 
-© 2025 Mordechai Naaman. All rights reserved.  
+© 2025 Mordechai Neeman. All rights reserved.  
 This project is licensed under a **Custom Private License**.
 
 ### Summary:
